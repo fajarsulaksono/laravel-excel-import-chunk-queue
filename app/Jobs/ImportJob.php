@@ -33,12 +33,15 @@ class ImportJob implements ShouldQueue
      */
     public function handle()
     {
+         $import = new ProductsImport;
         try {
-            Excel::import(new ProductsImport, 'public/' . $this->file);
+           Excel::import($import, 'public/' . $this->file);
+            //dd('Row count: ' . $import->getRowCount());
+            dd('Row count: ' . $import->getRowCount());
         }
         catch (\Exception $e){
             echo $e;
-        }
+        }//end catch
         unlink(storage_path('app/public/' . $this->file));
     }
 }
