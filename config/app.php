@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Imtigger\LaravelJobStatus\LaravelJobStatusServiceProvider::class,
         /*
          * Application Service Providers...
          */
