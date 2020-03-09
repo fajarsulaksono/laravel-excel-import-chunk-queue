@@ -3,16 +3,45 @@
 namespace App\Imports;
 
 use App\Product;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow; //TAMBAHKAN CODE INI
-use Illuminate\Contracts\Queue\ShouldQueue; //IMPORT SHOUDLQUEUE
+use Maatwebsite\Excel\Concerns\WithHeadingRow; //TAMBAHKAN CODE INI//IMPORT SHOUDLQUEUE
 use Maatwebsite\Excel\Concerns\WithChunkReading; //IMPORT CHUNK READING
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Events\BeforeImport;
+use Maatwebsite\Excel\Events\BeforeSheet;
+use Barryvdh\Debugbar\Facade as Debugbar;
+use Imtigger\LaravelJobStatus\Trackable;
 
-class ProductsImport implements ToModel, WithHeadingRow, ShouldQueue, WithChunkReading, WithBatchInserts
+class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue, WithChunkReading, WithBatchInserts
 {
+    // use Importable, RegistersEventListeners;
     private $rows = 0;
     // get last row : https://docs.laravel-excel.com/3.1/architecture/objects.html#getters
+
+    /**
+     * @return array
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterImport::class => [self::class, 'afterImport']
+        ];
+    }
+
+    public static function afterImport(AfterImport $event)
+    {
+        $worksheet = $event->reader->getActiveSheet();
+        $highestRow = $event->worksheet->getHighestRow();
+        Debugbar::addMessage('Highest row', $highestRow);
+        session([
+            'import_excel_creator' => $highestRow
+        ]);
+    }
     /**
     * @param array $row
     *
@@ -42,8 +71,10 @@ class ProductsImport implements ToModel, WithHeadingRow, ShouldQueue, WithChunkR
         return 5000;
     }
 
-    public function getRowCount(): int
+    public function getRowCount(): array
     {
-        return $this->rows;
+        return [
+            session('import_excel_creator')
+        ];
     }
 }

@@ -1,0 +1,6 @@
+* get excel total row (progress_max)
+* add column job_id in products
+* update ke job_statuses by job_id -> (progress_now, progress_max)
+* broadcast event job start diproses/before
+* broadcast event setiap 5 detik, untuk setiap job id progres berapa persen (count total row temp/excel total row * 100%)
+* broadcast event job seleasi diproses/after
