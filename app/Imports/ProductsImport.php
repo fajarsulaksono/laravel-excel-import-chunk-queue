@@ -29,14 +29,15 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     public function registerEvents(): array
     {
         return [
-            AfterImport::class => [self::class, 'afterImport']
+            BeforeSheet::class => [self::class, 'beforeSheet']
         ];
     }
 
-    public static function afterImport(AfterImport $event)
+    public static function beforeSheet(BeforeSheet $event)
     {
-        $worksheet = $event->reader->getActiveSheet();
-        $highestRow = $event->worksheet->getHighestRow();
+        //$highestRow = $this->spreadsheet->getActiveSheet()->getHighestRow();
+        $worksheet = $event->sheet;
+        $highestRow = $worksheet->getHighestRow();
         Debugbar::addMessage('Highest row', $highestRow);
         session([
             'import_excel_creator' => $highestRow

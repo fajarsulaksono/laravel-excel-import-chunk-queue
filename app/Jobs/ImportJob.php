@@ -34,6 +34,7 @@ class ImportJob implements ShouldQueue
      */
     public function handle()
     {
+        $this->setProgressMax(1000);
         $import = new ProductsImport;
         try {
             Debugbar::addMessage('Start import');
