@@ -33,7 +33,7 @@ class ImportJob implements ShouldQueue
      */
     public function handle()
     {
-        $import = new ProductsImport;
+        $import = new ProductsImport($this->job->getJobId());
         try {
             dump('ImportJob:handle():try');
             Excel::import($import, 'public/' . $this->file);

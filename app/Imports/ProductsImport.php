@@ -22,7 +22,10 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     private $current_progress = 0;
     private static $total_row;
     // get last row : https://docs.laravel-excel.com/3.1/architecture/objects.html#getters
-
+    public function  __construct($job_id)
+    {
+        $this->job_id = $job_id;
+    }
     /**
      * @return array
      */
@@ -48,6 +51,7 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
         $this->setProgressNow($this->current_progress);
         //dd($row);
         return new Product([
+            'job_id' => $this->job_id,
             'title' => $row['title'],
             'slug' => $row['title'],
             'description' => $row['description'],
