@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Product;
-use Illuminate\Http\Request;
+use \Maatwebsite\Excel\Reader;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
@@ -13,14 +13,14 @@ use Maatwebsite\Excel\Concerns\WithChunkReading; //IMPORT CHUNK READING
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Events\BeforeImport;
-use Maatwebsite\Excel\Events\BeforeSheet;
-use Barryvdh\Debugbar\Facade as Debugbar;
 use Imtigger\LaravelJobStatus\Trackable;
 
 class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue, WithChunkReading, WithBatchInserts
 {
-    // use Importable, RegistersEventListeners;
-    private $rows = 0;
+    use Importable, RegistersEventListeners, Trackable;
+
+    private $current_progress = 0;
+    private static $total_row;
     // get last row : https://docs.laravel-excel.com/3.1/architecture/objects.html#getters
 
     /**
@@ -29,19 +29,13 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     public function registerEvents(): array
     {
         return [
-            BeforeSheet::class => [self::class, 'beforeSheet']
+            BeforeImport::class => [self::class, 'beforeImport']
         ];
     }
 
-    public static function beforeSheet(BeforeSheet $event)
+    public static function beforeImport(BeforeImport $event)
     {
-        //$highestRow = $this->spreadsheet->getActiveSheet()->getHighestRow();
-        $worksheet = $event->sheet;
-        $highestRow = $worksheet->getHighestRow();
-        Debugbar::addMessage('Highest row', $highestRow);
-        session([
-            'import_excel_creator' => $highestRow
-        ]);
+        static::$total_row = $event->reader->getTotalRows();
     }
     /**
     * @param array $row
@@ -50,8 +44,8 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     */
     public function model(array $row)
     {
-        ++$this->rows;
-
+        ++$this->current_progress;
+        $this->setProgressNow($this->current_progress);
         //dd($row);
         return new Product([
             'title' => $row['title'],
@@ -72,10 +66,13 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
         return 5000;
     }
 
-    public function getRowCount(): array
+    public function getRowCount()
     {
-        return [
-            session('import_excel_creator')
-        ];
+        return static::$total_row;
+    }
+
+    public function getCurrentProgress(): int
+    {
+        return $this->current_progress;
     }
 }

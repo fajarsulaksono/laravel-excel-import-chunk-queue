@@ -12,7 +12,9 @@
         "beyondcode/laravel-websockets": "^1.4",
         "fideloper/proxy": "^4.0",
         "imtigger/laravel-job-status": "^0.2.2",
+        "imtigger/laravel-job-status-progress-view": "^0.2.1",
         "laravel/framework": "^6.2",
+        "laravel/telescope": "^3.1",
         "laravel/tinker": "^2.0",
         "maatwebsite/excel": "^3.1"
     },

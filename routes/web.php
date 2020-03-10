@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
+    Debugbar::addMessage('route-message', 'ini lagi di web:route');
     return view('welcome');
 });
 Route::post('/', 'ProductController@storeData');

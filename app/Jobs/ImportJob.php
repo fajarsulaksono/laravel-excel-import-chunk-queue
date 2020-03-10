@@ -10,7 +10,6 @@ use Illuminate\Queue\SerializesModels;
 use Excel;
 use App\Imports\ProductsImport;
 use Imtigger\LaravelJobStatus\Trackable;
-use Barryvdh\Debugbar\Facade as Debugbar;
 
 class ImportJob implements ShouldQueue
 {
@@ -34,16 +33,25 @@ class ImportJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->setProgressMax(1000);
         $import = new ProductsImport;
         try {
-            Debugbar::addMessage('Start import');
+            dump('ImportJob:handle():try');
             Excel::import($import, 'public/' . $this->file);
         }
         catch (\Exception $e){
-            Debugbar::addMessage('Import exception');
+            dump('ImportJob:handle():exception');
             echo $e;
         }//end catch
+
+        //dump($import->getRowCount());
+
+        $key = $value = NULL;
+        foreach ($import->getRowCount() as $key => $value) {
+            break;
+        }
+
+        $this->setProgressMax($value);
+        dump($this->job->getJobId());
         unlink(storage_path('app/public/' . $this->file));
         //dd($import->getRowCount());
     }
