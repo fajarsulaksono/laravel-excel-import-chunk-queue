@@ -1,7 +1,11 @@
 * get excel total row (progress_max) * OK
 * add column job_id in products * OK
-* raise event every single model inserted into table
-* update ke job_statuses by job_id -> (progress_now, progress_max)
+* raise event every single model inserted into table | excelInsertedEvent * OK
+* raise event on finished job :
+
+(new UsersImport)->queue('users.xlsx')->chain([
+    new NotifyUserOfCompletedImport(request()->user()),
+]);
 
 ############## websocket stuff start here ##############
 * broadcast event job start diproses/before
