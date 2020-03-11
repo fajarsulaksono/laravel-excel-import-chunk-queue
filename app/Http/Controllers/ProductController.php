@@ -26,7 +26,7 @@ class ProductController extends Controller
             //MEMBUAT JOB DENGAN MENGIRIMKAN PARAMETER FILENAME
             $job = ImportJob::dispatch($filename);
             dump('productController:afterDispatch : ');
-            return redirect()->back()->with(['success' => 'Upload success']);
+            return redirect()->back()->with(['success' => 'Success dispatch import job into queue']);
         }
         return redirect()->back()->with(['error' => 'Please choose file before']);
     }

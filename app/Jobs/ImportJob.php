@@ -43,15 +43,11 @@ class ImportJob implements ShouldQueue
             echo $e;
         }//end catch
 
-        //dump($import->getRowCount());
 
-        $key = $value = NULL;
-        foreach ($import->getRowCount() as $key => $value) {
-            break;
-        }
-
-        $this->setProgressMax($value);
+        $this->setProgressMax($import->getRowCount()); // -1 karena withHeadingRow
         dump($this->job->getJobId());
+        dump($import->getRowCount());
+        dump($import->getCurrentProgress());
         unlink(storage_path('app/public/' . $this->file));
         //dd($import->getRowCount());
     }

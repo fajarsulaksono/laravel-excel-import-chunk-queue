@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProductImportFinished
+class excelImportFinishedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -31,6 +31,6 @@ class ProductImportFinished
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('product-import-finished');
+        return new PrivateChannel('channel-import-finished');
     }
 }

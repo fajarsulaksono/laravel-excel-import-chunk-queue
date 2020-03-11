@@ -2,6 +2,8 @@
 
 namespace App\Imports;
 
+use App\Events\excelInsertedEvent;
+use App\Events\excelImportFinishedEvent;
 use App\Product;
 use \Maatwebsite\Excel\Reader;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -13,13 +15,13 @@ use Maatwebsite\Excel\Concerns\WithChunkReading; //IMPORT CHUNK READING
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Events\BeforeImport;
-use Imtigger\LaravelJobStatus\Trackable;
+use Maatwebsite\Excel\Events\AfterImport;
 
 class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue, WithChunkReading, WithBatchInserts
 {
-    use Importable, RegistersEventListeners, Trackable;
+    use Importable, RegistersEventListeners;
 
-    private $current_progress = 0;
+    private static $current_progress = 0;
     private static $total_row;
     // get last row : https://docs.laravel-excel.com/3.1/architecture/objects.html#getters
     public function  __construct($job_id)
@@ -32,14 +34,25 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     public function registerEvents(): array
     {
         return [
-            BeforeImport::class => [self::class, 'beforeImport']
+            BeforeImport::class => [self::class, 'beforeImport'],
+            AfterImport::class => [self::class, 'afterImport'],
         ];
     }
 
     public static function beforeImport(BeforeImport $event)
     {
-        static::$total_row = $event->reader->getTotalRows();
+        dump('beforeImport');
+        $total_rows = $event->reader->getTotalRows();
+
+        // getTotalRows for 1st sheet only
+        $key = $value = NULL;
+        foreach ($total_rows as $key => $value) {
+            break;
+        }
+        static::$total_row = ($value - 1); // -1 karena withHeadingRow
+
     }
+
     /**
     * @param array $row
     *
@@ -47,9 +60,19 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     */
     public function model(array $row)
     {
-        ++$this->current_progress;
-        $this->setProgressNow($this->current_progress);
-        //dd($row);
+        ++static::$current_progress;
+        //dump(static::$current_progress);
+        // emit event disini akan menterminate queue
+        //event(new excelInsertedEvent($this->job_id, static::$current_progress));
+        if (((static::$current_progress % $this->batchSize()) === 0) ||
+               (static::$current_progress == static::$total_row)
+        ) {
+            $percentage = round((static::$current_progress / static::$total_row) * 100);
+            $percentage = $percentage.'%';
+            //dump($percentage);
+            event(new excelInsertedEvent($this->job_id, $percentage));
+        }
+
         return new Product([
             'job_id' => $this->job_id,
             'title' => $row['title'],
@@ -62,7 +85,7 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
 
     public function batchSize(): int
     {
-        return 1000;
+        return 10000;
     }
 
     public function chunkSize(): int
@@ -75,8 +98,17 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
         return static::$total_row;
     }
 
-    public function getCurrentProgress(): int
+    public static function afterImport(AfterImport $event)
     {
-        return $this->current_progress;
+        dump('afterImport');
+        dump(static::$current_progress);
+        // //event(new excelInsertedEvent($this->job_id, static::$current_progress));
     }
+
+    public function getCurrentProgress()
+    {
+        dump(static::$current_progress);
+        return static::$current_progress;
+    }
+
 }

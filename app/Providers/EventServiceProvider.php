@@ -18,6 +18,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \App\Events\excelInsertedEvent::class => [
+            \App\Listeners\excelInsertedListener::class,
+        ],
+        \App\Events\excelImportFinishedEvent::class => [
+            \App\Listeners\excelImportFinishedListener::class,
+        ],
     ];
 
     /**
