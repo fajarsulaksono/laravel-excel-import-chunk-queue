@@ -1,13 +1,15 @@
 * get excel total row (progress_max) * OK
 * add column job_id in products * OK
 * raise event every single model inserted into table | excelInsertedEvent * OK
-* raise event on finished job :
-
-(new UsersImport)->queue('users.xlsx')->chain([
-    new NotifyUserOfCompletedImport(request()->user()),
-]);
+* raise event on finished job | excelImportFinishedEvent * OK
 
 ############## websocket stuff start here ##############
+https://freek.dev/1228-introducing-laravel-websockets-an-easy-to-use-websocket-server-implemented-in-php
+https://johnbraun.blog/posts/websockets-in-laravel
+
+laravel-websocket
+laravel-echo
+vuejs - ui preset vue
+
 * broadcast event job start diproses/before
-* broadcast event setiap 5 detik, untuk setiap job id progres berapa persen (count total row temp/excel total row * 100%)
 * broadcast event job seleasi diproses/after

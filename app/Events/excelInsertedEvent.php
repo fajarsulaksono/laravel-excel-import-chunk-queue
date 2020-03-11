@@ -34,6 +34,6 @@ class excelInsertedEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-inserted');
+        return new PrivateChannel('channel-inserted-'.$this->job_id);
     }
 }
