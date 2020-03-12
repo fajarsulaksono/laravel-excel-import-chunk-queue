@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e4a5b24710eff78ca5de736e71b52f3",
+    "content-hash": "5a328ca0e10ee389e2fc8a1559ecfc11",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -874,16 +874,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.18.0",
+            "version": "v6.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "077b895d935b7fbcfb1d1eb34217fa4f80a130d8"
+                "reference": "367c2c8dfdfe83cb2ddbc029c0222174098d093a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/077b895d935b7fbcfb1d1eb34217fa4f80a130d8",
-                "reference": "077b895d935b7fbcfb1d1eb34217fa4f80a130d8",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/367c2c8dfdfe83cb2ddbc029c0222174098d093a",
+                "reference": "367c2c8dfdfe83cb2ddbc029c0222174098d093a",
                 "shasum": ""
             },
             "require": {
@@ -1016,7 +1016,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-03-03T13:14:27+00:00"
+            "time": "2020-03-10T14:11:04+00:00"
         },
         {
             "name": "laravel/telescope",
@@ -1221,16 +1221,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.64",
+            "version": "1.0.65",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
+                "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
-                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
+                "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
                 "shasum": ""
             },
             "require": {
@@ -1301,7 +1301,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-02-05T18:14:17+00:00"
+            "time": "2020-03-08T18:53:20+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -1372,30 +1372,30 @@
         },
         {
             "name": "markbaker/complex",
-            "version": "1.4.7",
+            "version": "1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarkBaker/PHPComplex.git",
-                "reference": "1ea674a8308baf547cbcbd30c5fcd6d301b7c000"
+                "reference": "8eaa40cceec7bf0518187530b2e63871be661b72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarkBaker/PHPComplex/zipball/1ea674a8308baf547cbcbd30c5fcd6d301b7c000",
-                "reference": "1ea674a8308baf547cbcbd30c5fcd6d301b7c000",
+                "url": "https://api.github.com/repos/MarkBaker/PHPComplex/zipball/8eaa40cceec7bf0518187530b2e63871be661b72",
+                "reference": "8eaa40cceec7bf0518187530b2e63871be661b72",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6.0|^7.0.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
-                "phpcompatibility/php-compatibility": "^8.0",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+                "phpcompatibility/php-compatibility": "^9.0",
                 "phpdocumentor/phpdocumentor": "2.*",
                 "phploc/phploc": "2.*",
                 "phpmd/phpmd": "2.*",
                 "phpunit/phpunit": "^4.8.35|^5.4.0",
                 "sebastian/phpcpd": "2.*",
-                "squizlabs/php_codesniffer": "^3.3.0"
+                "squizlabs/php_codesniffer": "^3.4.0"
             },
             "type": "library",
             "autoload": {
@@ -1463,7 +1463,7 @@
                 "complex",
                 "mathematics"
             ],
-            "time": "2018-10-13T23:28:42+00:00"
+            "time": "2020-03-11T20:15:49+00:00"
         },
         {
             "name": "markbaker/matrix",
