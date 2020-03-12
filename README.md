@@ -1,1 +1,5 @@
-# Laravel : import excel with chunk & queue
+<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+
+Import excel data into database with batch, chunk feature from laravel/excel package - Queue -> Event -> Pusher Websockets.
+
+
