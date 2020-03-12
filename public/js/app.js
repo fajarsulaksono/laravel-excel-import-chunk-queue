@@ -1911,10 +1911,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      messages: [],
       message: ''
     };
   },
@@ -1922,9 +1928,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     Echo.channel('messages').listen('.newMessage', function (message) {
-      _this.messages.push(message);
+      _this.message = message; //message.current_progress
 
-      console.log(message);
+      console.log(message.current_progress);
     });
   }
 });
@@ -29436,7 +29442,26 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    { staticClass: "progress", attrs: { id: "progress_upload" } },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "progress-bar",
+          style: { width: _vm.message.current_progress },
+          attrs: {
+            role: "progressbar",
+            "aria-valuenow": "0",
+            "aria-valuemin": "0",
+            "aria-valuemax": "100"
+          }
+        },
+        [_vm._v(_vm._s(_vm.message.current_progress))]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
