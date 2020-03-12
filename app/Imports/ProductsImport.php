@@ -85,7 +85,7 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
 
     public function batchSize(): int
     {
-        return 10000;
+        return 5000;
     }
 
     public function chunkSize(): int

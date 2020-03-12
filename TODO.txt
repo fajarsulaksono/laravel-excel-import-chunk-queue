@@ -1,9 +1,10 @@
-* get excel total row (progress_max) * OK
-* add column job_id in products * OK
-* raise event every single model inserted into table | excelInsertedEvent * OK
-* raise event on finished job | excelImportFinishedEvent * OK
+* tes broadcast dari event, coba ke log dulu bisa apa ga
+* coba broadcast pake laravel websocket
+* coba laravel echo pake preset vue
+
 
 ############## websocket stuff start here ##############
+https://petericebear.github.io/starting-laravel-echo-20170303/
 https://freek.dev/1228-introducing-laravel-websockets-an-easy-to-use-websocket-server-implemented-in-php
 https://johnbraun.blog/posts/websockets-in-laravel
 
@@ -13,3 +14,9 @@ vuejs - ui preset vue
 
 * broadcast event job start diproses/before
 * broadcast event job seleasi diproses/after
+
+############## DONE ##############
+* get excel total row (progress_max) * OK
+* add column job_id in products * OK
+* raise event every single model inserted into table | excelInsertedEvent * OK
+* raise event on finished job | excelImportFinishedEvent * OK

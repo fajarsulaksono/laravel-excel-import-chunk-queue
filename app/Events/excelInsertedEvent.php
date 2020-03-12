@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class excelInsertedEvent
+class excelInsertedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -27,6 +27,20 @@ class excelInsertedEvent
         $this->current_progress = $current_progress;
     }
 
+    public function broadcastWith()
+    {
+        // This must always be an array. Since it will be parsed with json_encode()
+        return [
+            'job_id' => $this->job_id,
+            'current_progress' => $this->current_progress,
+        ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'newMessage';
+    }
+
     /**
      * Get the channels the event should broadcast on.
      *
@@ -34,6 +48,7 @@ class excelInsertedEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-inserted-'.$this->job_id);
+        // return new PrivateChannel('channel-inserted-'.$this->job_id);
+        return new Channel('messages');
     }
 }
