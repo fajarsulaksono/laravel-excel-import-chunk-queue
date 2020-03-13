@@ -23,10 +23,12 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
 
     private static $current_progress = 0;
     private static $total_row;
+    private static $static_job_id;
     // get last row : https://docs.laravel-excel.com/3.1/architecture/objects.html#getters
     public function  __construct($job_id)
     {
         $this->job_id = $job_id;
+        static::$static_job_id = $job_id;
     }
     /**
      * @return array
@@ -50,7 +52,6 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
             break;
         }
         static::$total_row = ($value - 1); // -1 karena withHeadingRow
-
     }
 
     /**
@@ -64,7 +65,7 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
         //dump(static::$current_progress);
         //event(new excelInsertedEvent($this->job_id, static::$current_progress));
         if (((static::$current_progress % $this->batchSize()) === 0) ||
-               (static::$current_progress == static::$total_row)
+                (static::$current_progress == static::$total_row)
         ) {
             $percentage = round((static::$current_progress / static::$total_row) * 100);
             $percentage = $percentage.'%';
@@ -101,7 +102,8 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     {
         dump('afterImport');
         dump(static::$current_progress);
-        event(new excelImportFinishedEvent($this->job_id, static::$total_row));
+        // Use self:: instead of $this-> for static methods.
+        event(new excelImportFinishedEvent(static::$static_job_id, static::$total_row));
     }
 
     public function getCurrentProgress()

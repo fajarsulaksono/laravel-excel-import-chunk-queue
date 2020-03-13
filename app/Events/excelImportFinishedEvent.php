@@ -24,7 +24,7 @@ class excelImportFinishedEvent implements ShouldBroadcast
     public function __construct($job_id, $total_rows)
     {
         $this->job_id = $job_id;
-        $this->total_rows = $total_rows
+        $this->total_rows = $total_rows;
     }
 
     public function broadcastWith()
@@ -33,13 +33,14 @@ class excelImportFinishedEvent implements ShouldBroadcast
         return [
             'job_id' => $this->job_id,
             'total_rows' => $this->total_rows,
+            'current_progress' => '100%',
             'job_finished' => true,
         ];
     }
 
     public function broadcastAs()
     {
-        return 'newMessage';
+        return 'finishMessage';
     }
 
     /**
