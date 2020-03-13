@@ -101,7 +101,7 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     {
         dump('afterImport');
         dump(static::$current_progress);
-        // //event(new excelInsertedEvent($this->job_id, static::$current_progress));
+        event(new excelImportFinishedEvent($this->job_id, static::$total_row));
     }
 
     public function getCurrentProgress()

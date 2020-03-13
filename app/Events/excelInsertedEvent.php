@@ -33,6 +33,7 @@ class excelInsertedEvent implements ShouldBroadcast
         return [
             'job_id' => $this->job_id,
             'current_progress' => $this->current_progress,
+            'job_finished' => false,
         ];
     }
 
