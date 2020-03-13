@@ -62,7 +62,6 @@ class ProductsImport implements WithEvents, ToModel, WithHeadingRow, ShouldQueue
     {
         ++static::$current_progress;
         //dump(static::$current_progress);
-        // emit event disini akan menterminate queue
         //event(new excelInsertedEvent($this->job_id, static::$current_progress));
         if (((static::$current_progress % $this->batchSize()) === 0) ||
                (static::$current_progress == static::$total_row)
