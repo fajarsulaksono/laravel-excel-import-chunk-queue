@@ -1,7 +1,6 @@
-* tes broadcast dari event, coba ke log dulu bisa apa ga
-* coba broadcast pake laravel websocket
-* coba laravel echo pake preset vue
-
+* tes broadcast dari event, coba ke log dulu bisa apa ga * OK
+* coba broadcast pake laravel websocket * OK pake pusher
+* coba laravel echo pake preset vue * OK
 
 ############## websocket stuff start here ##############
 https://petericebear.github.io/starting-laravel-echo-20170303/
