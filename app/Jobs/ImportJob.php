@@ -9,11 +9,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Excel;
 use App\Imports\ProductsImport;
-use Imtigger\LaravelJobStatus\Trackable;
 
 class ImportJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, Trackable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $file;
     /**
      * Create a new job instance.
